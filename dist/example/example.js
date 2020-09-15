@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d55fac4dfa417cfe89fa"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "791044c740c71094161b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -11331,8 +11331,6 @@
 	            scrollParent.left = parent.scrollLeft;
 	          }
 	        }
-	        // eslint-disable-next-line
-	        console.log(parent, _this.el.closest(parent), scrollParent);
 	
 	        _this.elCopyStyles = _extends({
 	          marginTop: offset.top - clientY - scroll.top + scrollParent.top,

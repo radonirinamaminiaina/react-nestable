@@ -170,8 +170,6 @@ var Nestable = function (_Component) {
             scrollParent.left = parent.scrollLeft;
           }
         }
-        // eslint-disable-next-line
-        console.log(parent, _this.el.closest(parent), scrollParent);
 
         _this.elCopyStyles = _extends({
           marginTop: offset.top - clientY - scroll.top + scrollParent.top,
