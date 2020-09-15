@@ -3,27 +3,27 @@ import { render } from 'react-dom';
 import Nestable from '../Nestable';
 
 const styles = {
-  position: "relative",
-  padding: "10px 15px",
-  fontSize: "20px",
-  border: "1px solid #f9fafa",
-  background: "#f9fafa",
-  cursor: "pointer"
+  position: 'relative',
+  padding: '10px 15px',
+  fontSize: '20px',
+  border: '1px solid #f9fafa',
+  background: '#f9fafa',
+  cursor: 'pointer',
 };
 const handlerStyles = {
-  position: "absolute",
+  position: 'absolute',
   top: 0,
   left: 0,
-  width: "10px",
-  height: "100%",
-  background: "steelblue",
-  cursor: "pointer"
+  width: '10px',
+  height: '100%',
+  background: 'steelblue',
+  cursor: 'pointer',
 };
 
 const items = [
   {
     id: 0,
-    text: 'Andy'
+    text: 'Andy',
   },
   {
     id: 1,
@@ -31,9 +31,9 @@ const items = [
     children: [
       {
         id: 2,
-        text: 'David'
-      }
-    ]
+        text: 'David',
+      },
+    ],
   },
   {
     id: 3,
@@ -41,17 +41,17 @@ const items = [
     children: [
       {
         id: 4,
-        text: 'Richard'
-      }
-    ]
-  }
+        text: 'Richard',
+      },
+    ],
+  },
 ];
 
 const grocery = [
   {
     id: 0,
     text: 'Apples',
-    type: 'fruits'
+    type: 'fruits',
   },
   {
     id: 1,
@@ -61,9 +61,9 @@ const grocery = [
       {
         id: 2,
         text: 'Bananas',
-        type: 'fruits'
-      }
-    ]
+        type: 'fruits',
+      },
+    ],
   },
   {
     id: 3,
@@ -73,16 +73,16 @@ const grocery = [
       {
         id: 4,
         text: 'Candy',
-        type: 'sweets'
-      }
-    ]
-  }
+        type: 'sweets',
+      },
+    ],
+  },
 ];
 
 class Example extends Component {
   state = {
     example: 1,
-    defaultCollapsed: false
+    defaultCollapsed: false,
   };
 
   collapse = (collapseCase) => {
@@ -104,7 +104,7 @@ class Example extends Component {
   isCollapsed = () => {
     const form = document.forms[0] || null;
 
-    return form && form.elements["collapsed"].checked;
+    return form && form.elements['collapsed'].checked;
   };
 
   renderItem = ({ item, collapseIcon, handler }) => {
@@ -119,28 +119,42 @@ class Example extends Component {
 
   renderExampleOne = () => {
     const { defaultCollapsed } = this.state;
-    const onDefaultCollapsed = () => this.setState({
-      defaultCollapsed: !defaultCollapsed
-    });
+    const onDefaultCollapsed = () =>
+      this.setState({
+        defaultCollapsed: !defaultCollapsed,
+      });
 
     return (
       <div>
         <h2>Basic example</h2>
 
-        <Nestable
-          items={items}
-          collapsed={defaultCollapsed}
-          renderItem={this.renderItem}
-          ref={el => this.refNestable = el}
-        />
+        <div className="parent-test">
+          <Nestable
+            items={items}
+            collapsed={defaultCollapsed}
+            renderItem={this.renderItem}
+            ref={(el) => (this.refNestable = el)}
+            parent=".parent-test"
+          />
+        </div>
 
-        <br/>
-        <button type="button" onClick={() => this.collapse(0)}>Expand all</button>
-        <button type="button" onClick={() => this.collapse(1)}>Collapse all</button>
-        <button type="button" onClick={() => this.collapse(2)}>Collapse Harry only</button>
-        <form style={{ display: "inline-block" }}>
+        <br />
+        <button type="button" onClick={() => this.collapse(0)}>
+          Expand all
+        </button>
+        <button type="button" onClick={() => this.collapse(1)}>
+          Collapse all
+        </button>
+        <button type="button" onClick={() => this.collapse(2)}>
+          Collapse Harry only
+        </button>
+        <form style={{ display: 'inline-block' }}>
           <label>
-            <input type="checkbox" name="collapsed" onChange={onDefaultCollapsed}/>
+            <input
+              type="checkbox"
+              name="collapsed"
+              onChange={onDefaultCollapsed}
+            />
             Collapsed by default
           </label>
         </form>
@@ -156,7 +170,7 @@ class Example extends Component {
         <Nestable
           items={items}
           renderItem={this.renderItem}
-          handler={<span style={handlerStyles}/>}
+          handler={<span style={handlerStyles} />}
         />
       </div>
     );
@@ -185,7 +199,7 @@ class Example extends Component {
 
   render() {
     const { example } = this.state;
-    const onExampleChange = e => this.setState({ example: +e.target.value });
+    const onExampleChange = (e) => this.setState({ example: +e.target.value });
 
     return (
       <div>
@@ -195,7 +209,7 @@ class Example extends Component {
           <option value={3}>Example with confirmChange</option>
         </select>
 
-        <hr/>
+        <hr />
 
         {example === 1 && this.renderExampleOne()}
         {example === 2 && this.renderExampleTwo()}
@@ -205,7 +219,4 @@ class Example extends Component {
   }
 }
 
-render(
-  <Example />,
-  document.getElementById('app')
-);
+render(<Example />, document.getElementById('app'));

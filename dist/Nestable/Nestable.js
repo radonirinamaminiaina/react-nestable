@@ -143,7 +143,8 @@ var Nestable = function (_Component) {
     _this.onMouseMove = function (e) {
       var _this$props2 = _this.props,
           group = _this$props2.group,
-          threshold = _this$props2.threshold;
+          threshold = _this$props2.threshold,
+          parent = _this$props2.parent;
       var dragItem = _this.state.dragItem;
       var clientX = e.clientX,
           clientY = e.clientY;
@@ -154,10 +155,27 @@ var Nestable = function (_Component) {
       if (!_this.elCopyStyles) {
         var offset = (0, _utils.getOffsetRect)(_this.el);
         var scroll = (0, _utils.getTotalScroll)(_this.el);
+        var scrollParent = {
+          top: 0,
+          left: 0
+        };
+
+        if (parent) {
+          if (typeof parent === 'string') {
+            var el = _this.el.closest(parent);
+            scrollParent.top = el.scrollTop;
+            scrollParent.left = el.scrollLeft;
+          } else {
+            scrollParent.top = parent.scrollTop;
+            scrollParent.left = parent.scrollLeft;
+          }
+        }
+        // eslint-disable-next-line
+        console.log(parent, _this.el.closest(parent), scrollParent);
 
         _this.elCopyStyles = _extends({
-          marginTop: offset.top - clientY - scroll.top,
-          marginLeft: offset.left - clientX - scroll.left
+          marginTop: offset.top - clientY - scroll.top + scrollParent.top,
+          marginLeft: offset.left - clientX - scroll.left + scrollParent.left
         }, transformProps);
       } else {
         _this.elCopyStyles = _extends({}, _this.elCopyStyles, transformProps);
@@ -628,11 +646,7 @@ var Nestable = function (_Component) {
         _react2.default.createElement(
           'ol',
           { className: 'nestable-list', style: listStyles },
-          _react2.default.createElement(_NestableItem2.default, {
-            item: dragItem,
-            options: options,
-            isCopy: true
-          })
+          _react2.default.createElement(_NestableItem2.default, { item: dragItem, options: options, isCopy: true })
         )
       );
     }
@@ -650,17 +664,16 @@ var Nestable = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: (0, _classnames2.default)(className, 'nestable', 'nestable-' + group, { 'is-drag-active': dragItem }) },
+        {
+          className: (0, _classnames2.default)(className, 'nestable', 'nestable-' + group, {
+            'is-drag-active': dragItem
+          })
+        },
         _react2.default.createElement(
           'ol',
           { className: 'nestable-list nestable-group' },
           items.map(function (item, i) {
-            return _react2.default.createElement(_NestableItem2.default, {
-              key: i,
-              index: i,
-              item: item,
-              options: options
-            });
+            return _react2.default.createElement(_NestableItem2.default, { key: i, index: i, item: item, options: options });
           })
         ),
         dragItem && this.renderDragLayer()
@@ -685,7 +698,8 @@ Nestable.propTypes = {
   renderCollapseIcon: _propTypes2.default.func,
   handler: _propTypes2.default.node,
   onChange: _propTypes2.default.func,
-  confirmChange: _propTypes2.default.func
+  confirmChange: _propTypes2.default.func,
+  parent: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.elementType])
 };
 Nestable.defaultProps = {
   items: [],
@@ -701,6 +715,7 @@ Nestable.defaultProps = {
   onChange: function onChange() {},
   confirmChange: function confirmChange() {
     return true;
-  }
+  },
+  parent: ''
 };
 exports.default = Nestable;
